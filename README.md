@@ -1,2 +1,2 @@
-# upload-image-service
+# Upload image service
 Service for uploading images.
