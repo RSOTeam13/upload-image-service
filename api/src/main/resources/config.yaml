@@ -1,0 +1,9 @@
+kumuluzee:
+  name: upload-image-service-service
+  env:
+    name: dev
+  version: 1.0.0
+  server:
+    base-url: http://localhost:8080
+    http:
+      port: 8080
