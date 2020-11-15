@@ -15,7 +15,7 @@ env:
   - secure: DFQ5OstDb/CcYJqc1ixfRQ2mjNlKQ03Glw+OECBMNH/T17QYxRwC0hhrZ0eTjLHyJ5n3o3F31NOWNhyinudGL2zJ50Vmn03lUKDCrNa1j9K6oRFIhWjeNw2bSavkmiMWrOKIZq11PGP7PQ7uxkwrYAfzFwzX3IBpl/iZYO6EaMf3jz1U/5XjGHTtrXY2Z6wIF0GGf5yo4+LrftNb6FjDdHzDSpoGsTELPdTg5UX17fHhgg9rVkV4DKrrDtsfgzywy2Gzyh/Anesorf2B27WNsANZNL9ZP58lPLuSZBm0BXLCMntiKtI7YBZafrV1p6l6QlrkIK2K8Z2OsUsKxHEAhL45wK7Up6LKu9iR4TlWNJBOJ8tWB5Ry+BSY2PojJa85rZIg+yUEl8pXL5f5dvh1eJyIVIN8tELG0JM0Yz6Zbk2t3PdgsHY+D7S59l6Y4J/e9aLg4mdNzy1wx1kVPNbkC7dOxgZs3NafEqXEZrOoCP76IbMR8h7lCcfJmYth04nH93FcUxVNtiMQbdMNfVnnwvxr603udKSY09jBZC+Kh2xiHnzSDvWR7nFpil10lAwryRVY2uBSSE4OyZ75d5D27QyAgEvw6mRlPygmujlhAn4x2Nudv7ZbXFwZ4KOB9eW5A4MLHITG1RauRUqTTBZ7+c31MO4p5WBFwkaaybTDMkA=
 script:
 - mvn clean package -U
-- docker build -t "$DOCKER_USERNAME"/"$DOCKER_IMAGE" -t "$DOCKER_USERNAME"/"upload-image-service-api:latest" .
+- docker build -t "$DOCKER_USERNAME"/"$DOCKER_IMAGE" -t "$DOCKER_USERNAME"/"upload-image-service-api" .
 after_success:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 - docker push "$DOCKER_USERNAME"/"$DOCKER_IMAGE"
