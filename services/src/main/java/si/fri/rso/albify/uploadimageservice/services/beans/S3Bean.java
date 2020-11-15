@@ -20,7 +20,7 @@ public class S3Bean {
 
 
     public static AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(Regions.EU_CENTRAL_1).withCredentials(new EnvironmentVariableCredentialsProvider()).build();
-    public static final String bucketName = "rso-images"; // TODO: pass in via configuration
+    public static final String bucketName = "albify"; // TODO: pass in via configuration
 
     public static String uploadImage(byte[] image) throws Exception{
         if (image == null) throw new IllegalArgumentException("file stream is not image");

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: upload-image-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: upload-image-service
+  template:
+    metadata:
+      labels:
+        app: upload-image-service
+    spec:
+      containers:
+        - image: anzemur/upload-image-service-api:latest
+          name: upload-image-service
+          ports:
+            - containerPort: 8080
+              name: server
+              protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: upload-image-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: server
+  selector:
+    app: upload-image-service
