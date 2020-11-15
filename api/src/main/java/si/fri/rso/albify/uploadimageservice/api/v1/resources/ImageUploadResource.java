@@ -38,10 +38,6 @@ public class ImageUploadResource {
     @POST
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     public Response uploadImage(@HeaderParam("userId") String userId, InputStream uploadedInputStream) {
-        System.out.println("S3 DATA");
-        System.out.println(System.getenv());
-        System.out.println(System.getenv("AWS_ACCESS_KEY_ID"));
-        System.out.println(System.getenv("AWS_SECRET_KEY"));
         if(userId == null){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
