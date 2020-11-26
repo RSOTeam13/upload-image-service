@@ -1,5 +1,6 @@
 package si.fri.rso.albify.uploadimageservice.api.v1.resources;
 
+import org.eclipse.microprofile.metrics.annotation.Metered;
 import si.fri.rso.albify.uploadimageservice.lib.Image;
 import si.fri.rso.albify.uploadimageservice.models.entities.ImageEntity;
 import si.fri.rso.albify.uploadimageservice.services.beans.ImageBean;
@@ -13,8 +14,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.io.InputStream;
-import java.net.URI;
-import java.util.Base64;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -35,6 +34,7 @@ public class ImageUploadResource {
     @Context
     protected UriInfo uriInfo;
 
+    @Metered(name = "upload_requests")
     @POST
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     public Response uploadImage(@HeaderParam("userId") String userId, InputStream uploadedInputStream) {

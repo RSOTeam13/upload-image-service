@@ -7,3 +7,7 @@ kumuluzee:
     base-url: http://localhost:8080
     http:
       port: 8080
+  metrics:
+    web-instrumentation:
+      - name: metrics-enpoint
+        url-pattern: /metrics/*
