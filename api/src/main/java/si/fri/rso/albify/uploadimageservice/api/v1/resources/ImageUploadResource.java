@@ -4,6 +4,7 @@ import org.eclipse.microprofile.metrics.annotation.Metered;
 import si.fri.rso.albify.uploadimageservice.lib.Image;
 import si.fri.rso.albify.uploadimageservice.models.entities.ImageEntity;
 import si.fri.rso.albify.uploadimageservice.services.beans.ImageBean;
+import si.fri.rso.albify.uploadimageservice.services.beans.RecognitionServiceBean;
 import si.fri.rso.albify.uploadimageservice.services.beans.S3Bean;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -31,6 +32,9 @@ public class ImageUploadResource {
     @Inject
     private ImageBean imageBean;
 
+    @Inject
+    private RecognitionServiceBean recognitionBean;
+
     @Context
     protected UriInfo uriInfo;
 
@@ -49,6 +53,13 @@ public class ImageUploadResource {
             newImage.setOwnerId(userId);
             newImage.setUrl(s3Bean.getUrl(imageKey).toString());
             newImage.setCreatedAt(new Date());
+            String[] tags = new String[]{};
+            try {
+                tags = (String[]) recognitionBean.getTags(imageKey).toArray();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            newImage.setTags(tags);
             ImageEntity resultEntity = imageBean.createImage(newImage);
 
             if(resultEntity != null){

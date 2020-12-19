@@ -9,6 +9,7 @@ public class ImageEntity {
     private Date createdAt;
     private ObjectId ownerId;
     private String url;
+    private String[] tags;
 
     public Date getCreatedAt() {
         return createdAt;
@@ -40,5 +41,13 @@ public class ImageEntity {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String[] getTags() {
+        return tags;
+    }
+
+    public void setTags(String[] url) {
+        this.tags = tags;
     }
 }

@@ -12,6 +12,7 @@ public class ImageConverter {
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setOwnerId(entity.getOwnerId().toString());
         dto.setUrl(entity.getUrl());
+        dto.setTags(entity.getTags());
 
         return dto;
 

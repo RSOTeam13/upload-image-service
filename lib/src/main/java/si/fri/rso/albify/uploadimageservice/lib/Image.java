@@ -8,6 +8,7 @@ public class Image {
     private Date createdAt;
     private String ownerId;
     private String url;
+    private String[] tags;
 
     public Date getCreatedAt() {
         return createdAt;
@@ -39,5 +40,13 @@ public class Image {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String[] getTags() {
+        return tags;
+    }
+
+    public void setTags(String[] tags) {
+        this.tags = tags;
     }
 }
