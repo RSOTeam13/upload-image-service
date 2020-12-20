@@ -10,6 +10,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
+import java.util.Base64;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -36,10 +37,10 @@ public class RecognitionServiceBean {
      * Calls recognition service and returns list of tags.
      * @return List of images.
      */
-    public List<String> getTags(String s3Path) {
+    public List<String> getTags(String imagePath) {
         String url = baseUrl + "/recognition";
         RecognitionRequestEntity entity = new RecognitionRequestEntity();
-        entity.setImagePath(s3Path);
+        entity.setImagePath(imagePath);
         return httpClient
                 .target(url)
                 .request()

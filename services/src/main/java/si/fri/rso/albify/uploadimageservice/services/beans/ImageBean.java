@@ -15,6 +15,8 @@ import si.fri.rso.albify.uploadimageservice.models.converters.ImageConverter;
 import si.fri.rso.albify.uploadimageservice.models.entities.ImageEntity;
 
 import javax.enterprise.context.RequestScoped;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -92,6 +94,7 @@ public class ImageBean {
             entity.setCreatedAt(new Date());
             entity.setOwnerId(new ObjectId(image.getOwnerId()));
             entity.setUrl(image.getUrl());
+            entity.setTags(new ArrayList<String>(Arrays.asList(image.getTags())));
 
             InsertOneResult result = imagesCollection.insertOne(entity);
             if (result != null) {

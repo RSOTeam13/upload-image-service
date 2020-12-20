@@ -55,7 +55,7 @@ public class ImageUploadResource {
             newImage.setCreatedAt(new Date());
             String[] tags = new String[]{};
             try {
-                tags = (String[]) recognitionBean.getTags(imageKey).toArray();
+                tags = recognitionBean.getTags(imageKey).toArray(String[]::new);
             } catch (Exception e) {
                 e.printStackTrace();
             }

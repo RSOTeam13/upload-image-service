@@ -1,6 +1,9 @@
 package si.fri.rso.albify.uploadimageservice.models.entities;
 
 import org.bson.types.ObjectId;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class ImageEntity {
@@ -9,7 +12,7 @@ public class ImageEntity {
     private Date createdAt;
     private ObjectId ownerId;
     private String url;
-    private String[] tags;
+    private ArrayList<String> tags;
 
     public Date getCreatedAt() {
         return createdAt;
@@ -43,11 +46,11 @@ public class ImageEntity {
         this.url = url;
     }
 
-    public String[] getTags() {
+    public ArrayList<String> getTags() {
         return tags;
     }
 
-    public void setTags(String[] url) {
+    public void setTags(ArrayList<String> tags) {
         this.tags = tags;
     }
 }
