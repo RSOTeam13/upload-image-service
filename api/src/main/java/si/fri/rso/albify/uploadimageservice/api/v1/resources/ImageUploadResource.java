@@ -1,11 +1,13 @@
 package si.fri.rso.albify.uploadimageservice.api.v1.resources;
 
 import org.eclipse.microprofile.metrics.annotation.Metered;
+import org.glassfish.jersey.server.ContainerRequest;
 import si.fri.rso.albify.uploadimageservice.lib.Image;
 import si.fri.rso.albify.uploadimageservice.models.entities.ImageEntity;
 import si.fri.rso.albify.uploadimageservice.services.beans.ImageBean;
 import si.fri.rso.albify.uploadimageservice.services.beans.RecognitionServiceBean;
 import si.fri.rso.albify.uploadimageservice.services.beans.S3Bean;
+import si.fri.rso.albify.uploadimageservice.services.filters.Authenticate;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -41,8 +43,9 @@ public class ImageUploadResource {
     @Metered(name = "upload_requests")
     @POST
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
-    public Response uploadImage(@HeaderParam("userId") String userId, InputStream uploadedInputStream) {
-        if(userId == null){
+    @Authenticate
+    public Response uploadImage(InputStream uploadedInputStream, @Context ContainerRequest request) {
+        if(request.getProperty("userId").toString() == null){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         try {
@@ -50,7 +53,7 @@ public class ImageUploadResource {
             byte[] bytes = uploadedInputStream.readAllBytes();
             String imageKey = s3Bean.uploadImage(bytes);
             Image newImage = new Image();
-            newImage.setOwnerId(userId);
+            newImage.setOwnerId(request.getProperty("userId").toString());
             newImage.setUrl(s3Bean.getUrl(imageKey).toString());
             newImage.setCreatedAt(new Date());
             String[] tags = new String[]{};
