@@ -13,7 +13,11 @@ kumuluzee:
         url-pattern: /metrics/*
   cors-filter:
     annotations:
-      users-resource:
+      image-upload-resource:
+        allow-origin: "*"
+        allow-subdomains: true
+        supported-methods: "GET, POST, DELETE, HEAD, OPTIONS, PUT"
+      demo-resource:
         allow-origin: "*"
         allow-subdomains: true
         supported-methods: "GET, POST, DELETE, HEAD, OPTIONS, PUT"
