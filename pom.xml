@@ -26,6 +26,7 @@
         <kumuluzee-health.version>2.4.0</kumuluzee-health.version>
         <kumuluzee-metrics.version>2.3.0</kumuluzee-metrics.version>
         <kumuluzee-config-mp.version>1.4.0</kumuluzee-config-mp.version>
+        <kumuluzee-cors.version>1.0.6</kumuluzee-cors.version>
     </properties>
 
     <dependencyManagement>
@@ -72,6 +73,12 @@
                 <groupId>org.mongodb</groupId>
                 <artifactId>mongodb-driver-sync</artifactId>
                 <version>4.1.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.kumuluz.ee.cors</groupId>
+                <artifactId>kumuluzee-cors</artifactId>
+                <version>${kumuluzee-cors.version}</version>
             </dependency>
 
         </dependencies>

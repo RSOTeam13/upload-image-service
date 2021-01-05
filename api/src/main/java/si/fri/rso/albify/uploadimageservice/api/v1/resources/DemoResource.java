@@ -1,5 +1,6 @@
 package si.fri.rso.albify.uploadimageservice.api.v1.resources;
 
+import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import org.bson.types.ObjectId;
 import org.eclipse.microprofile.metrics.annotation.Metered;
 import si.fri.rso.albify.uploadimageservice.lib.DemoData;
@@ -25,6 +26,7 @@ import java.util.logging.Logger;
 @Path("/demo")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@CrossOrigin(name = "demo-resource")
 public class DemoResource {
 
     private Logger log = Logger.getLogger(DemoResource.class.getName());

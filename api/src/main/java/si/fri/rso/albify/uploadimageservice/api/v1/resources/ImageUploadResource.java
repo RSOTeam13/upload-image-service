@@ -1,5 +1,6 @@
 package si.fri.rso.albify.uploadimageservice.api.v1.resources;
 
+import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.glassfish.jersey.server.ContainerRequest;
 import si.fri.rso.albify.uploadimageservice.lib.Image;
@@ -24,6 +25,7 @@ import java.util.logging.Logger;
 @Path("/upload")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@CrossOrigin(name = "image-upload-resource")
 public class ImageUploadResource {
 
     private Logger log = Logger.getLogger(ImageUploadResource.class.getName());
