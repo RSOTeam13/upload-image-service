@@ -30,6 +30,7 @@ public class RecognitionServiceBean {
         httpClient = ClientBuilder.newClient();
         baseUrl = "http://image-recognition-service:8080/v1";
 //        baseUrl = "http://localhost:8081/v1";
+        System.out.println("Init with baseUrl: " + baseUrl);
     }
 
 
@@ -39,6 +40,8 @@ public class RecognitionServiceBean {
      */
     public List<String> getTags(String imagePath) {
         String url = baseUrl + "/recognition";
+        System.out.println("Get tags over url: " + url);
+        System.out.println("Image path: " + imagePath);
         RecognitionRequestEntity entity = new RecognitionRequestEntity();
         entity.setImagePath(imagePath);
         return httpClient
