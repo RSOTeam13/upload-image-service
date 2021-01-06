@@ -10,6 +10,7 @@ import com.mongodb.client.result.InsertOneResult;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.types.ObjectId;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
 import si.fri.rso.albify.uploadimageservice.lib.Image;
 import si.fri.rso.albify.uploadimageservice.models.converters.ImageConverter;
 import si.fri.rso.albify.uploadimageservice.models.entities.ImageEntity;
@@ -98,7 +99,13 @@ public class ImageBean {
      * @param image to create.
      * @return Newly created image.
      */
-    public ImageEntity createImage(Image image) {
+    @CircuitBreaker(requestVolumeThreshold = 2, delay = 10000)
+    public ImageEntity createImage(Image image, Boolean forceFail) throws Exception {
+        log.info("Creating image");
+        if (forceFail) {
+            log.info("Force failing for image");
+            throw new Exception("Image create forced fail");
+        }
         try {
             ImageEntity entity = ImageConverter.toEntity(image);
             entity.setCreatedAt(new Date());

@@ -1,5 +1,6 @@
 package si.fri.rso.albify.uploadimageservice.services.beans;
 
+import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.glassfish.jersey.server.ContainerRequest;
 import si.fri.rso.albify.uploadimageservice.models.entities.RecognitionRequestEntity;
 
@@ -10,6 +11,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.logging.Logger;
@@ -38,7 +40,13 @@ public class RecognitionServiceBean {
      * Calls recognition service and returns list of tags.
      * @return List of images.
      */
-    public List<String> getTags(String imagePath) {
+    @Fallback(fallbackMethod = "getTagsFallback")
+    public List<String> getTags(String imagePath, Boolean forceFail) throws Exception {
+        log.info("Getting tags");
+        if (forceFail) {
+            log.info("Force failing for tags");
+            throw new Exception("Tag list forced fail");
+        }
         String url = baseUrl + "/recognition";
         System.out.println("Get tags over url: " + url);
         System.out.println("Image path: " + imagePath);
@@ -49,5 +57,13 @@ public class RecognitionServiceBean {
                 .request()
                 .post(Entity.json(entity), new GenericType<List<String>>() {});
     }
+    public List<String> getTags(String imagePath) throws Exception {
+        return this.getTags(imagePath, false);
+    }
+
+    public List<String> getTagsFallback(String imagePath, Boolean forceFail) throws Exception {
+        return new ArrayList<>(){};
+    }
+
 
 }

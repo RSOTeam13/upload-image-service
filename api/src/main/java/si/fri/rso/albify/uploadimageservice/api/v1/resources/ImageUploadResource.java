@@ -46,7 +46,7 @@ public class ImageUploadResource {
     @POST
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     @Authenticate
-    public Response uploadImage(InputStream uploadedInputStream, @Context ContainerRequest request) {
+    public Response uploadImage(InputStream uploadedInputStream, @DefaultValue("false") @QueryParam("forceFailTags") Boolean forceFailTags, @DefaultValue("false") @QueryParam("forceFailCreate") Boolean forceFailCreate, @Context ContainerRequest request) {
         if(request.getProperty("userId").toString() == null){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -60,12 +60,21 @@ public class ImageUploadResource {
             newImage.setCreatedAt(new Date());
             String[] tags = new String[]{};
             try {
-                tags = recognitionBean.getTags(imageKey).toArray(String[]::new);
+                tags = recognitionBean.getTags(imageKey, forceFailTags).toArray(String[]::new);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             newImage.setTags(tags);
-            ImageEntity resultEntity = imageBean.createImage(newImage);
+            System.out.println("Creating image");
+            ImageEntity resultEntity = null;
+
+            try {
+                 resultEntity = imageBean.createImage(newImage, forceFailCreate);
+                System.out.println("Image created");
+            } catch (Exception e) {
+                log.severe(e.getMessage());
+                return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+            }
 
             if(resultEntity != null){
                 return Response.status(Response.Status.CREATED).build();
