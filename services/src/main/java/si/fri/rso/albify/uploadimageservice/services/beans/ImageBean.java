@@ -14,6 +14,7 @@ import si.fri.rso.albify.uploadimageservice.lib.Image;
 import si.fri.rso.albify.uploadimageservice.models.converters.ImageConverter;
 import si.fri.rso.albify.uploadimageservice.models.entities.ImageEntity;
 
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,6 +44,15 @@ public class ImageBean {
     private MongoDatabase database = mongoClient.getDatabase("albify");
     private MongoCollection<ImageEntity> imagesCollection = database.getCollection("images", ImageEntity.class);
 
+    @PreDestroy
+    private void onDestroy() {
+        try {
+            mongoClient.close();
+        } catch (Exception e) {
+            log.severe("Error when closing image bean database connection.");
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Returns image by its ID.
