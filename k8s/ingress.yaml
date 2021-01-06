@@ -14,20 +14,20 @@ spec:
           - path: /upload-image-service(/|$)(.*) # /upload-image-service/v1/demo
             backend:
               serviceName: upload-image-service
-              servicePort: 80
+              servicePort: 8080
           - path: /image-service(/|$)(.*)
             backend:
               serviceName: image-service
-              servicePort: 80
+              servicePort: 8080
           - path: /comment-service(/|$)(.*)
             backend:
               serviceName: comment-service
-              servicePort: 80
+              servicePort: 8080
           - path: /user-service(/|$)(.*)
             backend:
               serviceName: user-service
-              servicePort: 80
+              servicePort: 8080
           - path: /album-service(/|$)(.*)
             backend:
               serviceName: album-service
-              servicePort: 80
+              servicePort: 8080
