@@ -51,6 +51,18 @@ public class ImageUploadResource {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         try {
+            ImageEntity resultEntity = null;
+            // for demo purposes, we don't want tons of trash in s3
+            if (forceFailCreate) {
+                try {
+                    Image newImage = new Image();
+                    resultEntity = imageBean.createImage(newImage, true);
+                    System.out.println("Image created");
+                } catch (Exception e) {
+                    log.severe(e.getMessage());
+                    return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+                }
+            }
 
             byte[] bytes = uploadedInputStream.readAllBytes();
             String imageKey = s3Bean.uploadImage(bytes);
@@ -66,7 +78,6 @@ public class ImageUploadResource {
             }
             newImage.setTags(tags);
             System.out.println("Creating image");
-            ImageEntity resultEntity = null;
 
             try {
                  resultEntity = imageBean.createImage(newImage, forceFailCreate);
